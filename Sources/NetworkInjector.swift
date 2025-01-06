@@ -35,9 +35,12 @@ protocol InjectorDelegate: AnyObject {
     func injectorSessionDidUpload(task: URLSessionTask, request: NSURLRequest, data: Data?)
 
     // Websocket
+    @available(iOS 13.0, *)
     func injectorSessionWebSocketDidSendMessage(task: URLSessionTask, message: URLSessionWebSocketTask.Message)
+    @available(iOS 13.0, *)
     func injectorSessionWebSocketDidReceive(task: URLSessionTask, message: URLSessionWebSocketTask.Message)
     func injectorSessionWebSocketDidSendPingPong(task: URLSessionTask)
+    @available(iOS 13.0, *)
     func injectorSessionWebSocketDidSendCancelWithReason(task: URLSessionTask, closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?)
 }
 

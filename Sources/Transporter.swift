@@ -164,11 +164,15 @@ extension NetServiceTransport: Transporter {
         headerData.append(&lengthPackage, length: Int(MemoryLayout<UInt64>.stride))
 
         // Send the message, must use isComplete = false
-        connection.send(content: headerData, isComplete: false, completion: .contentProcessed({ error in
-            if let error = error {
-                print("[Atlantis][Error] Error sending frame header: \(error)")
-            }
-        }))
+        if #available(iOS 13.0, *) {
+            connection.send(content: headerData, isComplete: false, completion: .contentProcessed({ error in
+                if let error = error {
+                    print("[Atlantis][Error] Error sending frame header: \(error)")
+                }
+            }))
+        } else {
+            // Fallback on earlier versions
+        }
 
         // 2. send the actual message
         connection.send(content: data, completion: .contentProcessed({ error in
